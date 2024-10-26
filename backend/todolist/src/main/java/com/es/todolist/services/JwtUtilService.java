@@ -103,7 +103,7 @@ public class JwtUtilService {
 
     public boolean validateToken(String token) throws Exception {
         // Extract the username from the token
-        String username = extractUsername(token);
+        String username = extractUserSub(token);
         // Extract the expiration date from the token
         Date expiration = extractExpiration(token);
         // Check if the token has expired
@@ -114,9 +114,19 @@ public class JwtUtilService {
     }
 
     // Extract the username (subject) from the token
-    public String extractUsername(String token) throws Exception {
+    public String extractUserSub(String token) throws Exception {
         Claims claims = verifyToken(token);
         return claims.getSubject();
+    }
+
+    public String extractUsername(String token) throws Exception {
+        Claims claims = verifyToken(token);
+        return claims.get("cognito:username", String.class);
+    }
+
+    public String extractEmail(String token) throws Exception {
+        Claims claims = verifyToken(token);
+        return claims.get("email", String.class);
     }
 
     // Extract the role from the token (assuming "role" is a claim)

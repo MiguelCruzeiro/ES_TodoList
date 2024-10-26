@@ -60,11 +60,11 @@ public class GetTokenController {
 
 
             // Extract roles from the token
-            String username = jwtUtilService.extractUsername(id_token); // Use JwtUtilService
-            System.out.println("Username: " + username);
+            String usersub = jwtUtilService.extractUserSub(id_token); // Use JwtUtilService
+            System.out.println("UserSub: " + usersub);
 
 
-            return ResponseEntity.ok(getTokenResponse(jwtToken, username));
+            return ResponseEntity.ok(getTokenResponse(jwtToken, usersub));
         }
 
         // Create a lock for this code
@@ -84,12 +84,12 @@ public class GetTokenController {
 
 
                 // Extract roles from the token
-                String username = jwtUtilService.extractUsername(id_token); // Use JwtUtilService
+                String usersub = jwtUtilService.extractUserSub(id_token); // Use JwtUtilService
 
-                System.out.println("Username: " + username);
+                System.out.println("Usersub: " + usersub);
 
 
-                return ResponseEntity.ok(getTokenResponse(jwtToken, username));
+                return ResponseEntity.ok(getTokenResponse(jwtToken, usersub));
             }
 
             // Prepare headers
@@ -119,11 +119,11 @@ public class GetTokenController {
 
 
             // Extract roles from the token
-            String username = jwtUtilService.extractUsername(id_token); // Use JwtUtilService
-            System.out.println("Username: " + username);
+            String usersub = jwtUtilService.extractUserSub(id_token); // Use JwtUtilService
+            System.out.println("Username: " + usersub);
 
             // Prepare the response
-            return ResponseEntity.ok(getTokenResponse(jwtToken, username));
+            return ResponseEntity.ok(getTokenResponse(jwtToken, usersub));
 
         } finally {
             lock.unlock(); // Always release the lock

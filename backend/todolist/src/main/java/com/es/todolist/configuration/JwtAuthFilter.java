@@ -25,6 +25,8 @@ import com.es.todolist.services.JwtUtilService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import com.es.todolist.configuration.CustomUserDetails;
+
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -58,13 +60,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 // Validate the token
                 if (jwtUtil.validateToken(token)) {
                     // Extract username from token
-                    String username = jwtUtil.extractUsername(token);
+                    String usersub = jwtUtil.extractUserSub(token);
 
-                    System.out.println("Username: " + username);
+                    String usename = jwtUtil.extractUsername(token);
+
+                    String email = jwtUtil.extractEmail(token);
+
+                    System.out.println("UserSub: " + usersub);
+
+                    // Create CustomUserDetails object
+                    CustomUserDetails userDetails = new CustomUserDetails(usersub, usename, email);
 
                     // Create UsernamePasswordAuthenticationToken without authorities
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            username, // principal (username)
+                            userDetails, // principal (username)
                             null, // credentials
                             null // authorities (no roles needed)
                     );
