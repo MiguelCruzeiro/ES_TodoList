@@ -31,6 +31,9 @@ public class Task {
     @Column(name = "completed")
     private boolean completed;
 
+    @Column(name = "priority")
+    private Priority priority;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties("tasks")

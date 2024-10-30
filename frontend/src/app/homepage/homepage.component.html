@@ -1,20 +1,73 @@
 <div class="task-container">
-    <h2>Tasks</h2>
-  
-    <!-- Form to Add a New Task -->
-    <div class="task-form">
-      <input [(ngModel)]="newTask.title" placeholder="Title" />
-      <input [(ngModel)]="newTask.description" placeholder="Description" />
-      <button (click)="addTask()">Add Task</button>
+  <h2>Tasks</h2>
+
+  <!-- Form to Add a New Task -->
+  <div class="task-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="newTask.title" placeholder="Enter title" maxlength="50" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="newTask.description" placeholder="Enter description" maxlength="200" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Priority</mat-label>
+      <mat-select [(ngModel)]="newTask.priority">
+        <mat-option value="LOW">Low</mat-option>
+        <mat-option value="MEDIUM">Medium</mat-option>
+        <mat-option value="HIGH">High</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="addTask()">Add Task</button>
+  </div>
+
+
+  <!-- List of Tasks -->
+  <div class="task-list">
+    <div class="priority-group">
+      <h3>Low Priority</h3>
+      <div class="task-column">
+        <div *ngFor="let task of tasks" class="task-item" [ngClass]="{'priority-low': task.priority === 'LOW'}" [hidden]="task.priority !== 'LOW'">
+          <div class="task-content">
+            <h3>{{ task.title }}</h3>
+            <p class="description">{{ task.description }}</p>
+            <span class="priority">{{ task.priority | titlecase }}</span>
+          </div>
+          <button mat-raised-button color="warn" (click)="deleteTask(task.id)">Delete Task</button>
+        </div>
+      </div>
     </div>
-  
-    <!-- List of Tasks -->
-    <div class="task-list">
-      <div *ngFor="let task of tasks" class="task-item">
-        <h3>{{ task.title }}</h3>
-        <p>{{ task.description }}</p>
-        <button (click)="deleteTask(task.id)">Delete Task</button> <!-- Delete button added here -->
+
+    <div class="priority-group">
+      <h3>Medium Priority</h3>
+      <div class="task-column">
+        <div *ngFor="let task of tasks" class="task-item" [ngClass]="{'priority-medium': task.priority === 'MEDIUM'}" [hidden]="task.priority !== 'MEDIUM'">
+          <div class="task-content">
+            <h3>{{ task.title }}</h3>
+            <p class="description">{{ task.description }}</p>
+            <span class="priority">{{ task.priority | titlecase }}</span>
+          </div>
+          <button mat-raised-button color="warn" (click)="deleteTask(task.id)">Delete Task</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="priority-group">
+      <h3>High Priority</h3>
+      <div class="task-column">
+        <div *ngFor="let task of tasks" class="task-item" [ngClass]="{'priority-high': task.priority === 'HIGH'}" [hidden]="task.priority !== 'HIGH'">
+          <div class="task-content">
+            <h3>{{ task.title }}</h3>
+            <p class="description">{{ task.description }}</p>
+            <span class="priority">{{ task.priority | titlecase }}</span>
+          </div>
+          <button mat-raised-button color="warn" (click)="deleteTask(task.id)">Delete Task</button>
+        </div>
       </div>
     </div>
   </div>
-  
+</div>
