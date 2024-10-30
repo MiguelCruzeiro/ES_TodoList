@@ -1,1 +1,20 @@
-<p>homepage works!</p>
+<div class="task-container">
+    <h2>Tasks</h2>
+  
+    <!-- Form to Add a New Task -->
+    <div class="task-form">
+      <input [(ngModel)]="newTask.title" placeholder="Title" />
+      <input [(ngModel)]="newTask.description" placeholder="Description" />
+      <button (click)="addTask()">Add Task</button>
+    </div>
+  
+    <!-- List of Tasks -->
+    <div class="task-list">
+      <div *ngFor="let task of tasks" class="task-item">
+        <h3>{{ task.title }}</h3>
+        <p>{{ task.description }}</p>
+        <button (click)="deleteTask(task.id)">Delete Task</button> <!-- Delete button added here -->
+      </div>
+    </div>
+  </div>
+  

@@ -29,6 +29,7 @@ export class ApiService {
 
   private getHeaders(withAuth: boolean = false): Headers {
     const headers = new Headers({
+      'Content-Type': 'application/json',
     });
     if (withAuth) {
       const token = this.getAuthToken();
@@ -65,7 +66,26 @@ export class ApiService {
       method: 'GET',
       headers: this.getHeaders(true)
     });
+    return await response.json() ?? [];
+  }
+
+  async createTask(task: any) {
+    const url = `${this.baseUrl}/tasks`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: this.getHeaders(true),
+      body: JSON.stringify(task)
+    });
     return await response.json() ?? undefined;
+  }
+
+  async deleteTask(taskId: string) {
+    const url = `${this.baseUrl}/tasks/${taskId}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: this.getHeaders(true)
+    });
+    return await response.status === 204;
   }
 
 

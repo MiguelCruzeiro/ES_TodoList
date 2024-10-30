@@ -1,0 +1,39 @@
+.task-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .task-form input {
+    padding: 8px;
+    font-size: 1em;
+  }
+  
+  .task-form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .task-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .task-list {
+    margin-top: 20px;
+  }
+  
+  .task-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
