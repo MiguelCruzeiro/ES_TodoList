@@ -1,5 +1,8 @@
 package com.es.todolist.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -26,6 +29,7 @@ import com.es.todolist.configuration.CustomUserDetails;
 public class TaskController {
 
     private final TaskService taskService;
+    Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
@@ -52,6 +56,8 @@ public class TaskController {
         if (task == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        System.out.println(task.getUser());
+        logger.info("User sub: " + userSub);
         if (!task.getUser().getSub().equals(userSub)) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

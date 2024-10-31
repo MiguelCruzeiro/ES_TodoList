@@ -50,7 +50,7 @@ public class JwtUtilService {
         System.out.println("Kid: " + kid);
         RSAPublicKey publicKey = getPublicKeyFromJwks(kid);
         System.out.println("Public key: " + publicKey);
-        return Jwts.parser().setSigningKey(publicKey).build().parseSignedClaims(token).getPayload();
+        return Jwts.parser().verifyWith(publicKey).build().parseSignedClaims(token).getPayload();
     }
 
     public String extractKidFromToken(String token) throws Exception {
