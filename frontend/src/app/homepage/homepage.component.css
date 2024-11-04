@@ -72,13 +72,19 @@ h3 {
   margin-bottom: 15px;
   background-color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Allow task items to take full width of the column */
-  max-width: 600px; /* Set a max width for better layout */
+  width: 500px; /* Allow task items to take full width of the column */
+  max-width: 500px; /* Set a max width for better layout */
 }
 
 .task-content {
   flex-grow: 1;
   margin-right: 15px; /* Space between content and delete button */
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between check and delete buttons */
 }
 
 /* Description Style */
@@ -106,11 +112,48 @@ h3 {
   border-left: 5px solid #f44336; /* Red border */
 }
 
-.priority {
+.category {
   padding: 5px 10px;
   border-radius: 5px;
   color: #fff;
+  background-color: cadetblue;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
   font-size: 1.0em;
   display: inline-block; /* Ensures padding and background color is applied */
+  margin-bottom: 10px;
 }
+
+/* Completed Task Styling */
+.completed-task {
+  background-color: #e0e0e0; /* Light grey background for completed tasks */
+}
+
+.completed-task .task-content {
+  text-decoration: line-through; /* Strike-through only for task content */
+  opacity: 0.7; /* Lower opacity only for task content */
+}
+
+/* Remove line-through and restore opacity for buttons inside completed tasks */
+.completed-task .task-actions button {
+  text-decoration: none; /* Remove line-through */
+  opacity: 1; /* Full opacity for action buttons */
+}
+
+.deadline {
+  font-size: 0.9rem;
+  color: #555; /* Adjust the color as needed */
+  margin-top: 10px;
+  display: flex; /* Use flex layout for icon alignment */
+  align-items: center; /* Align icon with text vertically */
+}
+
+.icon {
+  margin-right: 5px; /* Space between icon and deadline text */
+  vertical-align: middle; /* Align icon to middle of text */
+  font-size: 1.5rem; /* Adjust icon size to match text size if needed */
+  margin-top: -3px;
+}
+
+
+
+

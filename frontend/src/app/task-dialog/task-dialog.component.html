@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Create New Task</h2>
+<mat-card>
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="task.title" #title="ngModel" placeholder="Enter title" maxlength="50" required />
+      <mat-error *ngIf="title.invalid && (title.dirty || title.touched)">Title is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="task.description" #description="ngModel" placeholder="Enter description" maxlength="200" required />
+      <mat-error *ngIf="description.invalid && (description.dirty || description.touched)">Description is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <input matInput [(ngModel)]="task.category" #category="ngModel" placeholder="Enter category" maxlength="200" required />
+      <mat-error *ngIf="category.invalid && (category.dirty || category.touched)">Category is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Priority</mat-label>
+      <mat-select [(ngModel)]="task.priority" #priority="ngModel" required>
+        <mat-option value="LOW">Low</mat-option>
+        <mat-option value="MEDIUM">Medium</mat-option>
+        <mat-option value="HIGH">High</mat-option>
+      </mat-select>
+      <mat-error *ngIf="priority.invalid && (priority.dirty || priority.touched)">Priority is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Deadline</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="task.deadline" #deadline="ngModel" placeholder="Choose a deadline" required />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="deadline.invalid && (deadline.dirty || deadline.touched)">Deadline is required</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" 
+            [disabled]="title.invalid || description.invalid || priority.invalid || deadline.invalid">Add Task</button>
+  </div>
+</mat-card>

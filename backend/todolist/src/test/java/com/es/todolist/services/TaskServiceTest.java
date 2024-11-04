@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +40,7 @@ public class TaskServiceTest {
 
     @BeforeEach
     void setUp() {
-        task = new Task(1L, "Test Task", "Test Description", false, Priority.LOW, null);
+        task = new Task(1L, "Test Task", "Test Description", false, Priority.LOW, null, LocalDateTime.now().plusDays(7));
     }
 
     @Test

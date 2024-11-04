@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,5 +65,49 @@ public class TaskController {
         taskService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    
+
+    @PutMapping("/completed/{id}")
+    public ResponseEntity<Task> markAsCompleted(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id){
+        String userSub = userDetails.getUserSub();
+        Task task = taskService.findById(id);
+        if (task == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        System.out.println(task.getUser());
+        logger.info("User sub: " + userSub);
+        if (!task.getUser().getSub().equals(userSub)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(taskService.markAsCompleted(task), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> editTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails, 
+            @PathVariable Long id, 
+            @RequestBody Task updatedTask) {
+        
+        String userSub = userDetails.getUserSub();
+        String username = userDetails.getUsername();
+        String email = userDetails.getEmail();
+        Task existingTask = taskService.findById(id);
+        
+        if (existingTask == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (!existingTask.getUser().getSub().equals(userSub)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        // Update the task fields with new values
+        existingTask.setTitle(updatedTask.getTitle());
+        existingTask.setDescription(updatedTask.getDescription());
+        existingTask.setPriority(updatedTask.getPriority());
+        existingTask.setDeadline(updatedTask.getDeadline());
+
+        // Save the updated task
+        Task savedTask = taskService.save(existingTask, userSub, username, email);
+        return new ResponseEntity<>(savedTask, HttpStatus.OK);
+    }
 }

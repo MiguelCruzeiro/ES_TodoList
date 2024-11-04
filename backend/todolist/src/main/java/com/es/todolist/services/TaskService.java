@@ -43,6 +43,11 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+    public Task markAsCompleted(Task task){
+        task.setCompleted(true);
+        return taskRepository.save(task);
+    }
+
     public Task findById(Long id) {
         return taskRepository.findById(id).orElse(null);
     }
