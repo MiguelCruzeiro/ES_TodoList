@@ -1,0 +1,116 @@
+h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 1.6rem; /* Larger font size for better visibility */
+  font-weight: bold; /* Bold text */
+  color: #333; /* Darker color for better contrast */
+  text-align: center; /* Center the title */
+  letter-spacing: 1px; /* Increase space between letters */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  padding-bottom: 10px; /* Space between the text and the border */
+}
+
+h3 {
+  font-size: 1.3rem; /* Slightly smaller font size */
+  font-weight: bold; /* Bold text */
+  color: #333; /* Darker color for better contrast */
+  margin-top: 20px; /* Space above the title */
+  margin-bottom: 10px; /* Space below the title */
+}
+
+
+.task-container {
+  max-width: 1700px; /* Adjust this if necessary */
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column; /* Ensure flex column for layout */
+  align-items: center; /* Center items within the container */
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 50px;
+  margin: 0 auto;
+  max-width: 800px; /* Set a max width for the form */
+  width: 100%; /* Allow form to take full width */
+  padding: 20px; /* Add some padding for aesthetics */
+  background-color: white; /* White background */
+  border-radius: 8px; /* Rounded corners */
+}
+
+
+.task-list {
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center columns */
+  margin-top: 60px;
+  width: 100%; /* Ensure full width for centering */
+}
+
+.priority-group {
+  flex: 1; /* Allow each group to take equal space */
+  margin: 0 10px; /* Add some margin between columns */
+  display: flex; /* Add display flex for the group */
+  flex-direction: column; /* Arrange items in a column */
+  align-items: center; /* Center items in this group */
+}
+
+.task-column {
+  flex-grow: 1; /* Ensure the column takes available space */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center task items within the column */
+}
+
+.task-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Allow task items to take full width of the column */
+  max-width: 600px; /* Set a max width for better layout */
+}
+
+.task-content {
+  flex-grow: 1;
+  margin-right: 15px; /* Space between content and delete button */
+}
+
+/* Description Style */
+.description {
+  margin: 5px 0;
+  max-width: 600px; /* Set a max width for the description */
+  overflow-wrap: break-word; /* Break long words if necessary */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+}
+
+/* Priority Styles */
+.priority-low {
+  background-color: #d4edda; /* Light green */
+  border-left: 5px solid #4caf50; /* Green border */
+}
+
+.priority-medium {
+  background-color: #fff3cd; /* Light orange */
+  border-left: 5px solid #ff9800; /* Orange border */
+}
+
+.priority-high {
+  background-color: #f8d7da; /* Light red */
+  border-left: 5px solid #f44336; /* Red border */
+}
+
+.priority {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  font-size: 1.0em;
+  display: inline-block; /* Ensures padding and background color is applied */
+}

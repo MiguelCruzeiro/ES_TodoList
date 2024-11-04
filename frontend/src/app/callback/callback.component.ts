@@ -49,6 +49,7 @@ export class CallbackComponent implements OnInit {
             } else {
               console.warn('localStorage is not available. Token cannot be saved.');
             }
+            this.router.navigate(['/homepage']);
           })
           .catch(error => {
             console.error('Error during token retrieval:', error);

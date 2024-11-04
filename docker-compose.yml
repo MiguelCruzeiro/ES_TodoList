@@ -1,0 +1,37 @@
+services:
+  mysql_db:
+    image: mysql/mysql-server:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    networks:
+      - default
+
+  spring:
+    build:
+      context: ./backend/todolist
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/todolist:/app
+      - ./backend/todolist/.m2:/root/.m2
+    working_dir: /app
+    command: sh run.sh
+    ports:
+      - 8080:8080
+      - 35729:35729
+      - 5005:5005
+    restart: unless-stopped
+    depends_on:
+      - mysql_db
+    networks:
+      - default
+    
+
+networks:
+  default:
+    driver: bridge
