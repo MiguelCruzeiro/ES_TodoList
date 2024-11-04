@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -38,5 +40,30 @@ public class Task {
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties("tasks")
     private AppUser user;
+
+    @Column(name = "created_date", updatable = false)
+    private LocalDateTime createdDate;
+
+    @Column(name = "deadline")
+    private LocalDateTime deadline;
+
+    @Column(name = "category")
+    private String category;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdDate = LocalDateTime.now();
+    }
+
+    public Task(Long id, String title, String description, boolean completed, Priority priority, AppUser user, LocalDateTime deadline) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.completed = completed;
+        this.priority = priority;
+        this.user = user;
+        this.deadline = deadline;
+    }
+    
     
 }

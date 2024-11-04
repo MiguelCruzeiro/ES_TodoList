@@ -80,4 +80,34 @@ public class TaskController {
         }
         return new ResponseEntity<>(taskService.markAsCompleted(task), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> editTask(
+            @AuthenticationPrincipal CustomUserDetails userDetails, 
+            @PathVariable Long id, 
+            @RequestBody Task updatedTask) {
+        
+        String userSub = userDetails.getUserSub();
+        String username = userDetails.getUsername();
+        String email = userDetails.getEmail();
+        Task existingTask = taskService.findById(id);
+        
+        if (existingTask == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        if (!existingTask.getUser().getSub().equals(userSub)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        // Update the task fields with new values
+        existingTask.setTitle(updatedTask.getTitle());
+        existingTask.setDescription(updatedTask.getDescription());
+        existingTask.setPriority(updatedTask.getPriority());
+        existingTask.setDeadline(updatedTask.getDeadline());
+
+        // Save the updated task
+        Task savedTask = taskService.save(existingTask, userSub, username, email);
+        return new ResponseEntity<>(savedTask, HttpStatus.OK);
+    }
 }

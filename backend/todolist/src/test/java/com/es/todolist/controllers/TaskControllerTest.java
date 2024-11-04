@@ -11,6 +11,7 @@ import com.es.todolist.services.TaskService;
 
 import jakarta.servlet.ServletException;
 
+import com.es.todolist.config.WithMockMyUser;
 import com.es.todolist.configuration.CustomUserDetails;
 import com.es.todolist.configuration.JwtAuthFilter;
 
@@ -33,6 +34,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Collections;
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(TaskController.class)
@@ -61,7 +63,7 @@ class TaskControllerTest {
         customUserDetails = new CustomUserDetails(appUser.getUsername(), appUser.getSub(), appUser.getEmail());
 
         // Setting up the task
-        task = new Task(1L, "Sample Task", "This is a sample task description", false, Priority.HIGH, appUser);
+        task = new Task(1L, "Sample Task", "This is a sample task description", false, Priority.HIGH, appUser, LocalDateTime.now().plusDays(7));
     }
 
     @Test
@@ -112,7 +114,7 @@ class TaskControllerTest {
 
     @Test
     void deleteTask_ShouldReturnForbiddenStatusIfUserNotAuthorized() throws Exception {
-        Task anotherTask = new Task(2L, "Other Task", "Other task description", false, Priority.LOW, new AppUser(2L, "otherUser", "otherSub", "other@example.com", null));
+        Task anotherTask = new Task(2L, "Other Task", "Other task description", false, Priority.LOW, new AppUser(2L, "otherUser", "otherSub", "other@example.com", null), LocalDateTime.now().plusDays(7));
 
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(customUserDetails, null));
 
@@ -122,4 +124,27 @@ class TaskControllerTest {
                 .with(user(customUserDetails)))
                 .andExpect(status().isForbidden());
     }
+
+    @Test
+    @WithMockMyUser(username = "username", userSub = "testSub", email = "email")
+    void deleteTask_ShouldReturnNoContentStatusIfTaskExistsAndUserAuthorized() throws Exception {
+        // Mock the security context to simulate an authenticated user
+        
+        // Set up the task with the same user (so authorization will pass)
+        task = new Task(1L, "Sample Task", "This is a sample task description", false, Priority.HIGH, appUser, LocalDateTime.now(), LocalDateTime.now().plusDays(7), "category");
+        
+        // Mock the task service to return the task when looked up by ID
+        when(taskService.findById(1L)).thenReturn(task);
+        
+        // Mock the delete operation (void method, so no return)
+        doNothing().when(taskService).delete(1L);
+
+        // Perform the DELETE request and expect a 204 No Content status
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/tasks/{id}", 1L))
+                .andExpect(status().isNoContent());
+        
+        // Verify that the delete method was called once with the correct ID
+        verify(taskService, times(1)).delete(1L);
+    }
+
 }

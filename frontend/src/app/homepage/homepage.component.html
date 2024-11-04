@@ -2,28 +2,8 @@
   <h2>Tasks</h2>
 
   <!-- Form to Add a New Task -->
-  <div class="task-form">
-    <mat-form-field appearance="fill">
-      <mat-label>Title</mat-label>
-      <input matInput [(ngModel)]="newTask.title" placeholder="Enter title" maxlength="50" />
-    </mat-form-field>
+  <button mat-raised-button color="primary" (click)="openTaskDialog()">Add Task</button>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <input matInput [(ngModel)]="newTask.description" placeholder="Enter description" maxlength="200" />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Priority</mat-label>
-      <mat-select [(ngModel)]="newTask.priority">
-        <mat-option value="LOW">Low</mat-option>
-        <mat-option value="MEDIUM">Medium</mat-option>
-        <mat-option value="HIGH">High</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <button mat-raised-button color="primary" (click)="addTask()">Add Task</button>
-  </div>
 
 
   <!-- List of Tasks -->
@@ -35,12 +15,17 @@
           <div class="task-content">
             <h3>{{ task.title }}</h3>
             <p class="description">{{ task.description }}</p>
-            <span class="priority">{{ task.priority | titlecase }}</span>
+            <p class="deadline"><mat-icon class="icon">calendar_month</mat-icon>{{ task.deadline | date:'mediumDate' }}</p>
+            <span class="category">{{ task.category | titlecase }}</span>
           </div>
-          <button mat-raised-button color="primary" (click)="markTaskAsCompleted(task.id)" *ngIf="!task.completed">
-            Mark as Completed
-          </button>
-          <button mat-raised-button color="warn" (click)="deleteTask(task.id)">Delete Task</button>
+          <div class="task-actions">
+            <button mat-icon-button color="primary" (click)="markTaskAsCompleted(task.id)" *ngIf="!task.completed">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -52,12 +37,17 @@
           <div class="task-content">
             <h3>{{ task.title }}</h3>
             <p class="description">{{ task.description }}</p>
-            <span class="priority">{{ task.priority | titlecase }}</span>
+            <p class="deadline"><mat-icon class="icon">calendar_month</mat-icon>{{ task.deadline | date:'mediumDate' }}</p>
+            <span class="category">{{ task.category | titlecase }}</span>
           </div>
-          <button mat-raised-button color="primary" (click)="markTaskAsCompleted(task.id)" *ngIf="!task.completed">
-            Mark as Completed
-          </button>
-          <button mat-raised-button color="warn" (click)="deleteTask(task.id)">Delete Task</button>
+          <div class="task-actions">
+            <button mat-icon-button color="primary" (click)="markTaskAsCompleted(task.id)" *ngIf="!task.completed">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -69,12 +59,17 @@
           <div class="task-content">
             <h3>{{ task.title }}</h3>
             <p class="description">{{ task.description }}</p>
-            <span class="priority">{{ task.priority | titlecase }}</span>
+            <p class="deadline"><mat-icon class="icon">calendar_month</mat-icon>{{ task.deadline | date:'mediumDate' }}</p>
+            <span class="category">{{ task.category | titlecase }}</span>
           </div>
-          <button mat-raised-button color="primary" (click)="markTaskAsCompleted(task.id)" *ngIf="!task.completed">
-            Mark as Completed
-          </button>
-          <button mat-raised-button color="warn" (click)="deleteTask(task.id)">Delete Task</button>
+          <div class="task-actions">
+            <button mat-icon-button color="primary" (click)="markTaskAsCompleted(task.id)" *ngIf="!task.completed">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
