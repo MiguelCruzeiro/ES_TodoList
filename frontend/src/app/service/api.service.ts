@@ -88,5 +88,14 @@ export class ApiService {
     return await response.status === 204;
   }
 
+  async markTaskAsCompleted(taskId: string) {
+    const url = `${this.baseUrl}/tasks/completed/${taskId}`;
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: this.getHeaders(true)
+    });
+    return await response.json() ?? undefined;
+  }
+
 
 }

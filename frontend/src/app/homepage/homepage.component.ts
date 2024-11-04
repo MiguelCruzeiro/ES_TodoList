@@ -57,5 +57,15 @@ export class HomepageComponent implements OnInit {
       console.error('Error deleting task:', error);
     }
   }
+
+  async markTaskAsCompleted(taskId: string) {
+    try {
+      await this.ApiService.markTaskAsCompleted(taskId);
+      const task = this.tasks.find(task => task.id === taskId);
+      if (task) task.completed = true; // Mark as completed in the local list
+    } catch (error) {
+      console.error('Error marking task as completed:', error);
+    }
+  }
   
 }
