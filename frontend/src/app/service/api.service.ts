@@ -97,5 +97,15 @@ export class ApiService {
     return await response.json() ?? undefined;
   }
 
+  async editTask(taskId: string, task: any) {
+    const url = `${this.baseUrl}/tasks/${taskId}`;
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: this.getHeaders(true),
+      body: JSON.stringify(task)
+    });
+    return await response.json() ?? undefined;
+  }
+
 
 }

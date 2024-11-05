@@ -46,7 +46,7 @@ h3 {
 .task-list {
   display: flex; /* Use flexbox for layout */
   justify-content: center; /* Center columns */
-  margin-top: 60px;
+  margin-top: 40px;
   width: 100%; /* Ensure full width for centering */
 }
 
@@ -153,6 +153,41 @@ h3 {
   font-size: 1.5rem; /* Adjust icon size to match text size if needed */
   margin-top: -3px;
 }
+
+.filter-section {
+  margin-top: 50px;
+  margin-bottom: 20px; /* Space below the filters */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+}
+
+.task-controls {
+  display: flex;
+  flex-wrap: wrap; /* Allow filters to wrap */
+  gap: 15px; /* Space between filter elements */
+  justify-content: center; /* Center the controls horizontally */
+}
+
+
+.filter-card {
+  flex: 1;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: white; /* White background for the card */
+}
+
+.add-task-button {
+  margin-top: 15px; /* Space above the button */
+  margin-left: 70px;
+  width: 100%; /* Full width for the button alignment */
+  display: flex; /* Use flexbox for layout */
+  justify-content: flex-start; /* Align the button to the left */
+}
+
+
 
 
 

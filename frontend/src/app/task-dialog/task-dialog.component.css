@@ -17,4 +17,9 @@ mat-card {
   button {
     margin-left: 8px; /* Space between buttons */
   }
+
+h2 {
+    margin-left: 20px;
+    margin-top: 10px;
+}
   
