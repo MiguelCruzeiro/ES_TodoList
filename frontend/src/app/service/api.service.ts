@@ -18,12 +18,10 @@ export class ApiService {
     }
   }
 
-  private getUserSub(): string[] {
+  public logout(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const userSub = localStorage.getItem('userSub');
-      return userSub ? JSON.parse(userSub) : [];
-    } else {
-      return [];
+      localStorage.removeItem('token');
+      this.document.location.href = '/';
     }
   }
 

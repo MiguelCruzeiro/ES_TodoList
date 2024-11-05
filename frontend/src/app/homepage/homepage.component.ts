@@ -158,6 +158,10 @@ export class HomepageComponent implements OnInit {
       }
     });
   }
+
+  logout() {
+    this.ApiService.logout();
+  }
   
 
   
