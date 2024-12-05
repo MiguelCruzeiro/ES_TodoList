@@ -105,6 +105,7 @@ public class TaskController {
         existingTask.setDescription(updatedTask.getDescription());
         existingTask.setPriority(updatedTask.getPriority());
         existingTask.setDeadline(updatedTask.getDeadline());
+        existingTask.setCategory(updatedTask.getCategory());
 
         // Save the updated task
         Task savedTask = taskService.save(existingTask, userSub, username, email);

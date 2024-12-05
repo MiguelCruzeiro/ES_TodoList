@@ -1,17 +1,56 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <h1 class="logo">Task Manager</h1>
+    <button mat-button color="warn" (click)="logout()">Logout</button>
+  </div>
+</nav>
+
 <div class="task-container">
-  <h2>Tasks</h2>
 
   <!-- Form to Add a New Task -->
-  <button mat-raised-button color="primary" (click)="openTaskDialog()">Add Task</button>
 
+  <!-- Sorting and Filtering Options -->
+  <div class="filter-section">
+    <h3>Task Filters</h3>
+    <div class="task-controls">
+      <mat-form-field appearance="fill">
+        <mat-label>Sort by</mat-label>
+        <mat-select [(ngModel)]="sortOption" (selectionChange)="sortTasks()">
+          <mat-option value="creationDate">Creation Date</mat-option>
+          <mat-option value="deadline">Deadline</mat-option>
+          <mat-option value="completionStatus">Completion Status</mat-option>
+        </mat-select>
+      </mat-form-field>
 
+      <mat-form-field appearance="fill">
+        <mat-label>Filter by Category</mat-label>
+        <mat-select [(ngModel)]="filterCategory" (selectionChange)="filterTasks()">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let category of categories" [value]="category">{{ category | titlecase }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Filter by Completion Status</mat-label>
+        <mat-select [(ngModel)]="filterStatus" (selectionChange)="filterTasks()">
+          <mat-option value="">All</mat-option>
+          <mat-option value="completed">Completed</mat-option>
+          <mat-option value="incomplete">Incomplete</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button class="resetbutton" mat-raised-button color="primary" (click)="resetFilters()">Reset Filters</button>
+  </div>
+  <div class="add-task-button">
+    <button mat-raised-button color="primary" (click)="openTaskDialog()">Add Task</button>
+  </div>
 
   <!-- List of Tasks -->
   <div class="task-list">
     <div class="priority-group">
       <h3>Low Priority</h3>
       <div class="task-column">
-        <div *ngFor="let task of tasks" class="task-item" [ngClass]="{'priority-low': task.priority === 'LOW', 'completed-task': task.completed}" [hidden]="task.priority !== 'LOW'">
+        <div *ngFor="let task of filteredTasks" class="task-item" [ngClass]="{'priority-low': task.priority === 'LOW', 'completed-task': task.completed}" [hidden]="task.priority !== 'LOW'">
           <div class="task-content">
             <h3>{{ task.title }}</h3>
             <p class="description">{{ task.description }}</p>
@@ -24,6 +63,9 @@
             </button>
             <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
               <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="openTaskDialog(task)">
+              <mat-icon>edit</mat-icon>
             </button>
           </div>
         </div>
@@ -33,7 +75,7 @@
     <div class="priority-group">
       <h3>Medium Priority</h3>
       <div class="task-column">
-        <div *ngFor="let task of tasks" class="task-item" [ngClass]="{'priority-medium': task.priority === 'MEDIUM', 'completed-task': task.completed}" [hidden]="task.priority !== 'MEDIUM'">
+        <div *ngFor="let task of filteredTasks" class="task-item" [ngClass]="{'priority-medium': task.priority === 'MEDIUM', 'completed-task': task.completed}" [hidden]="task.priority !== 'MEDIUM'">
           <div class="task-content">
             <h3>{{ task.title }}</h3>
             <p class="description">{{ task.description }}</p>
@@ -46,6 +88,9 @@
             </button>
             <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
               <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="openTaskDialog(task)">
+              <mat-icon>edit</mat-icon>
             </button>
           </div>
         </div>
@@ -55,7 +100,7 @@
     <div class="priority-group">
       <h3>High Priority</h3>
       <div class="task-column">
-        <div *ngFor="let task of tasks" class="task-item" [ngClass]="{'priority-high': task.priority === 'HIGH', 'completed-task': task.completed}" [hidden]="task.priority !== 'HIGH'">
+        <div *ngFor="let task of filteredTasks" class="task-item" [ngClass]="{'priority-high': task.priority === 'HIGH', 'completed-task': task.completed}" [hidden]="task.priority !== 'HIGH'">
           <div class="task-content">
             <h3>{{ task.title }}</h3>
             <p class="description">{{ task.description }}</p>
@@ -68,6 +113,9 @@
             </button>
             <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
               <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" (click)="openTaskDialog(task)">
+              <mat-icon>edit</mat-icon>
             </button>
           </div>
         </div>

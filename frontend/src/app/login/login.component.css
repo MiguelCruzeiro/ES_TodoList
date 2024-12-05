@@ -1,27 +1,69 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5; /* Light background color for better contrast */
+}
+
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  height: 100vh;
+  padding: 20px;
+  background-color: white; /* White background for the container */
+  border-radius: 10px; /* Rounded corners for the container */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  padding-left: 150px;
+}
+
+.login-content {
+  flex: 1; /* Allow content to take available space */
+  padding: 20px; /* Padding for the text section */
+}
+
+h2 {
+  margin-bottom: 10px; /* Reduced margin for better spacing */
+  font-size: 2rem; /* Larger font size for the heading */
+  color: #333; /* Darker text color */
+}
+
+p {
+  margin-bottom: 30px; /* Space below the paragraph */
+  color: #666; /* Lighter color for subtext */
+  text-align: left; /* Align text to the left */
+}
+
+.login-button {
+  padding: 12px 24px; /* More padding for better touch targets */
+  font-size: 18px; /* Slightly larger font size */
+  background-color: #4CAF50; /* Green background for the button */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.login-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly scale the button on hover */
+}
+
+.login-button:active {
+  transform: scale(0.95); /* Slightly scale down on click */
+}
+
+.login-image {
+  flex: 1; /* Allow image section to take available space */
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  padding-right: 100px;
+}
+
+.login-image img {
+  width: 100%;
+  max-width: 900px;
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10px; /* Rounded corners for the image */
+}

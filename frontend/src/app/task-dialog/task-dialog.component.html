@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Create New Task</h2>
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Task' : 'Create New Task' }}</h2>
 <mat-card>
   <div mat-dialog-content>
     <mat-form-field appearance="fill">
@@ -40,6 +40,6 @@
   <div mat-dialog-actions>
     <button mat-button (click)="onCancel()">Cancel</button>
     <button mat-raised-button color="primary" (click)="onSubmit()" 
-            [disabled]="title.invalid || description.invalid || priority.invalid || deadline.invalid">Add Task</button>
+            [disabled]="title.invalid || description.invalid || priority.invalid || deadline.invalid">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</button>
   </div>
 </mat-card>

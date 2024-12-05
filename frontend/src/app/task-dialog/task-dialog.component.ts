@@ -23,11 +23,19 @@ import { NgIf } from '@angular/common';
 
 export class TaskDialogComponent {
   task = { title: '', description: '', category: '', priority: '', deadline: null};
+  isEditMode: boolean;
+
 
   constructor(
     public dialogRef: MatDialogRef<TaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+    this.isEditMode = !!data;
+    if (data) {
+      this.task = data;
+    }
+
+  }
 
   onCancel(): void {
     this.dialogRef.close();

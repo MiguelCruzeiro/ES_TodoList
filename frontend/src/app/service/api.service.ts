@@ -18,12 +18,10 @@ export class ApiService {
     }
   }
 
-  private getUserSub(): string[] {
+  public logout(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const userSub = localStorage.getItem('userSub');
-      return userSub ? JSON.parse(userSub) : [];
-    } else {
-      return [];
+      localStorage.removeItem('token');
+      this.document.location.href = '/';
     }
   }
 
@@ -93,6 +91,16 @@ export class ApiService {
     const response = await fetch(url, {
       method: 'PUT',
       headers: this.getHeaders(true)
+    });
+    return await response.json() ?? undefined;
+  }
+
+  async editTask(taskId: string, task: any) {
+    const url = `${this.baseUrl}/tasks/${taskId}`;
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: this.getHeaders(true),
+      body: JSON.stringify(task)
     });
     return await response.json() ?? undefined;
   }
