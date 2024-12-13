@@ -14,7 +14,7 @@ export class LoginComponent {
   onButtonClick() {
     console.log('Button clicked! Redirecting to login...');
 
-    const url = 'https://todo-list.auth.eu-north-1.amazoncognito.com/login?client_id=4v0jdjej2dlp3038447n2bf3s6&response_type=code&scope=email+openid&redirect_uri=http://localhost:4200/callback';
+    const url = 'https://todo-list.auth.eu-north-1.amazoncognito.com/login?client_id=4v0jdjej2dlp3038447n2bf3s6&response_type=code&scope=email+openid&redirect_uri=https://es-ua.ddns.net/callback';
 
     // Redirect to the login page
     window.location.assign(url);

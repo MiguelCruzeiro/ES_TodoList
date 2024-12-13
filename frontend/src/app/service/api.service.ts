@@ -6,7 +6,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 })
 export class ApiService {
 
-  baseUrl = "http://localhost:8080/api";
+  baseUrl = "https://es-ua.ddns.net:444/api";
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: Document) { }
 
@@ -40,7 +40,7 @@ export class ApiService {
 
   async gettoken(code: string) {
     // Construct the GET request URL with the code parameter
-    const url = `http://localhost:8080/api/token/get?code=${code}`;
+    const url = `https://es-ua.ddns.net:444/api/token/get?code=${code}`;
 
     const headers = new Headers({
       'Content-Type': 'text/plain',

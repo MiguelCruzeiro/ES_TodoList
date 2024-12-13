@@ -1,33 +1,38 @@
 services:
-  mysql_db:
-    image: mysql/mysql-server:5.7
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "3306:3306"
-    networks:
-      - default
-
   spring:
     build:
       context: ./backend/todolist
       dockerfile: Dockerfile
+    container_name: spring-todolist
+    image: miguelcruzeiro/spring-todolist:v9
     volumes:
       - ./backend/todolist:/app
       - ./backend/todolist/.m2:/root/.m2
-    working_dir: /app
-    command: sh run.sh
     ports:
       - 8080:8080
       - 35729:35729
       - 5005:5005
+    environment:
+      COGNITO_JWKS_URL: ${COGNITO_JWKS_URL}
+      EXTERNAL_AUTH_TOKEN_URL: ${EXTERNAL_AUTH_TOKEN_URL}
+      EXTERNAL_AUTH_CLIENT_CREDENTIALS: ${EXTERNAL_AUTH_CLIENT_CREDENTIALS}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     restart: unless-stopped
-    depends_on:
-      - mysql_db
+    networks:
+      - default
+
+  angular:
+    build: ./frontend
+    container_name: angular-todolist
+    stdin_open: true
+    ports:
+      - 4200:4200
+    expose:
+      - 4200
+    restart: unless-stopped
+    image: miguelcruzeiro/angular-todolist:v4
     networks:
       - default
     

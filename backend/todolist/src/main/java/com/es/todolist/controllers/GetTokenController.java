@@ -19,6 +19,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @CrossOrigin(origins = "*") // Allow all origins for CORS
 @RestController
 @RequestMapping("/api/token")
@@ -44,6 +48,11 @@ public class GetTokenController {
     }
 
     // Handle GET request
+    @Operation(summary = "Get token")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Token retrieved"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+    })
     @GetMapping("/get")
     public ResponseEntity<Map<String, Object>> getToken(@RequestParam String code) throws Exception {
         System.out.println("Code: " + code);
@@ -101,7 +110,7 @@ public class GetTokenController {
             // Prepare body
             String body = "grant_type=authorization_code" +
                           "&code=" + code +
-                          "&redirect_uri=http://localhost:4200/callback";
+                          "&redirect_uri=https://es-ua.ddns.net/callback";
 
             // Create request entity
             HttpEntity<String> entity = new HttpEntity<>(body, headers);

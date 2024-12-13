@@ -23,8 +23,12 @@ import com.es.todolist.services.TaskService;
 
 import com.es.todolist.configuration.CustomUserDetails;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 //cors
-@CrossOrigin(origins = "http://localhost:4200",  maxAge = 3600, allowCredentials="true")
+@CrossOrigin(origins = "https://es-ua.ddns.net",  maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
@@ -36,6 +40,11 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+    @Operation(summary = "Create a new task")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Task created"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+    })
     @PostMapping
     public ResponseEntity<Task> create(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody Task task) {
         String userSub = userDetails.getUserSub();
@@ -44,12 +53,23 @@ public class TaskController {
         return new ResponseEntity<>(taskService.save(task, userSub, username, email), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Get all tasks")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tasks found"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+    })
     @GetMapping
     public ResponseEntity<Iterable<Task>> getTasks(@AuthenticationPrincipal CustomUserDetails userDetails) {
         String userSub = userDetails.getUserSub();
         return new ResponseEntity<>(taskService.findByUserSub(userSub), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get a task by id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Task found"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+        @ApiResponse(responseCode = "404", description = "Task not found"),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) {
         String userSub = userDetails.getUserSub();
@@ -66,6 +86,12 @@ public class TaskController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Operation(summary = "Mark a task as completed")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Task marked as completed"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+        @ApiResponse(responseCode = "404", description = "Task not found"),
+    })
     @PutMapping("/completed/{id}")
     public ResponseEntity<Task> markAsCompleted(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id){
         String userSub = userDetails.getUserSub();
@@ -81,6 +107,12 @@ public class TaskController {
         return new ResponseEntity<>(taskService.markAsCompleted(task), HttpStatus.OK);
     }
 
+    @Operation(summary = "Edit a task")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Task edited"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
+        @ApiResponse(responseCode = "404", description = "Task not found"),
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Task> editTask(
             @AuthenticationPrincipal CustomUserDetails userDetails, 
